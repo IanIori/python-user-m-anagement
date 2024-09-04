@@ -22,3 +22,11 @@ class User(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    @classmethod
+    def get_all(cls):
+        r = cls.query.all()
+        result = []
+
+        for i in r:
+            result.append(i.data)
+        return result
