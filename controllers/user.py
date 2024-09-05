@@ -1,5 +1,6 @@
 from flask import request
 from models.user import User
+from extensions import db
 
 def add_user_function():
     if request.method == "POST":
@@ -7,8 +8,8 @@ def add_user_function():
         email = request.form["email"]
         password = request.form["password"]    
         user = User(
-            name = name
-            email = email
+            name = name,
+            email = email,
             password = password
         )
         user.save()
@@ -21,3 +22,11 @@ def add_user_function():
         }
         return data
     
+def edit_user_function(data):
+    if request.method == "POST":
+        data.name = request.form["name"]
+        data.email = request.form["email"]
+        data.password = request.form["password"]
+
+    db.session.commit()
+    return data
